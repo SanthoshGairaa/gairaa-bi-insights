@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 interface ToolbarProps {
-  activeView: "dashboard" | "data" | "reports";
+  activeView: "dashboard" | "data" | "reports" | "builder";
   showFilters: boolean;
   onToggleFilters: () => void;
 }

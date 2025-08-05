@@ -4,12 +4,13 @@ import { Toolbar } from "./Toolbar";
 import { ChartPanel } from "./ChartPanel";
 import { DataTable } from "./DataTable";
 import { FilterPanel } from "./FilterPanel";
+import { DashboardBuilder } from "./DashboardBuilder";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, Layout, Table, Filter } from "lucide-react";
 
 export const Dashboard = () => {
-  const [activeView, setActiveView] = useState<"dashboard" | "data" | "reports">("dashboard");
+  const [activeView, setActiveView] = useState<"dashboard" | "data" | "reports" | "builder">("dashboard");
   const [showFilters, setShowFilters] = useState(true);
 
   return (
@@ -115,6 +116,8 @@ export const Dashboard = () => {
                   </div>
                 </div>
               )}
+              
+              {activeView === "builder" && <DashboardBuilder />}
             </main>
             
             {showFilters && <FilterPanel />}

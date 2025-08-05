@@ -8,18 +8,20 @@ import {
   Home, 
   TrendingUp,
   Users,
-  DollarSign
+  DollarSign,
+  Paintbrush
 } from "lucide-react";
 
 interface SidebarProps {
-  activeView: "dashboard" | "data" | "reports";
-  onViewChange: (view: "dashboard" | "data" | "reports") => void;
+  activeView: "dashboard" | "data" | "reports" | "builder";
+  onViewChange: (view: "dashboard" | "data" | "reports" | "builder") => void;
 }
 
 const navigation = [
   { id: "dashboard", label: "Dashboard", icon: Home },
   { id: "data", label: "Data", icon: Database },
   { id: "reports", label: "Reports", icon: FileText },
+  { id: "builder", label: "Builder", icon: Paintbrush },
 ];
 
 const quickStats = [
