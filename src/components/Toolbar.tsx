@@ -9,8 +9,19 @@ import {
   RefreshCw,
   Calendar,
   Bell,
-  User
+  User,
+  LogOut
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface ToolbarProps {
   activeView: "dashboard" | "data" | "reports";
@@ -19,6 +30,12 @@ interface ToolbarProps {
 }
 
 export const Toolbar = ({ activeView, showFilters, onToggleFilters }: ToolbarProps) => {
+  const { user, signOut } = useAuth();
+
+  const getUserInitials = (email: string) => {
+    return email.split('@')[0].slice(0, 2).toUpperCase();
+  };
+
   return (
     <div className="bg-toolbar border-b border-border px-6 py-4">
       <div className="flex items-center justify-between">
@@ -78,9 +95,43 @@ export const Toolbar = ({ activeView, showFilters, onToggleFilters }: ToolbarPro
             </Badge>
           </Button>
 
-          <Button variant="ghost" size="sm">
-            <User className="w-4 h-4" />
-          </Button>
+          {/* User Menu */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="flex items-center space-x-2">
+                <Avatar className="w-6 h-6">
+                  <AvatarFallback className="text-xs bg-primary text-primary-foreground">
+                    {user?.email ? getUserInitials(user.email) : 'US'}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="hidden sm:inline-block text-sm">
+                  {user?.email?.split('@')[0]}
+                </span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium leading-none">
+                    {user?.email?.split('@')[0]}
+                  </p>
+                  <p className="text-xs leading-none text-muted-foreground">
+                    {user?.email}
+                  </p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <User className="w-4 h-4 mr-2" />
+                Profile Settings
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={signOut} className="text-destructive">
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </div>
